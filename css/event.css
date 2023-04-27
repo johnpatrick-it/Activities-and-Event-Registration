@@ -1,0 +1,60 @@
+.form-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    z-index: 9;
+}
+
+.form-popup h2 {
+    margin: 0;
+    padding: 10px;
+    background-color: #ccc;
+    color: #fff;
+}
+
+.form-popup label {
+    display: block;
+    margin: 10px;
+}
+
+.form-popup input[type="text"],
+.form-popup input[type="date"],
+.form-popup input[type="number"],
+.form-popup select,
+.form-popup textarea {
+    display: block;
+    margin: 10px;
+    width: 80%;
+    padding: 5px;
+}
+
+.form-popup input[type="file"] {
+    margin: 10px;
+}
+
+.form-popup button[type="submit"],
+.form-popup button[type="button"] {
+    margin: 10px;
+    padding: 5px 10px;
+}
+
+.form-popup button[type="submit"] {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.form-popup button[type="button"] {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.form-popup button[id="close-event-btn"] {
+    float: right;
+}
+
+.form-popup.show {
+    display: block;
+}
