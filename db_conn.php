@@ -3,7 +3,7 @@
 $sname = "localhost";
 $uname = "root";
 $password = "";
-
+//DB Connection
 $db_name = "db1_mapulanglupa";
 $conn = mysqli_connect($sname, $uname, $password, $db_name);
 
