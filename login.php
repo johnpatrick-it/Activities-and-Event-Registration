@@ -20,28 +20,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Check if the password matches
     if (password_verify($password, $user['password'])) {
-      // Set session variable to indicate that the user is logged in
-      $_SESSION['loggedin'] = true;
+  // Set session variables to indicate that the user is logged in
+  $_SESSION['loggedin'] = true;
+  $_SESSION['user_id'] = $user['id'];
 
-      // Redirect to the appropriate page based on user type
-       if ($user['user_type'] === 'admin') {
-            header('Location: admindashboard.php');
-            exit();
-        } else if ($user['user_resident'] === 'non-resident') {
-            header('Location: popupguest.php');
-            exit();
-        } else {
-            header('Location: home.php');
-            exit();
-        }
-    } else {
-        echo "Invalid username or password.";
-    }
- 
+  // Redirect to the appropriate page based on user type
+  if ($user['user_type'] === 'admin') {
+    header('Location: admindashboard.php');
+    exit();
+  } else if ($user['user_resident'] === 'non-resident') {
+    header('Location: guesthome.php');
+    exit();
+  } else {
+    header('Location: home.php');
+    exit();
+  }
 } else {
-  // Handle user not found
-  $error_msg = 'User not found.';
+  echo "Invalid username or password.";
 }
+  }
 
 mysqli_close($conn);
 }

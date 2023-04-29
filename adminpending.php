@@ -118,11 +118,12 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
 <body>
   <nav>
     <ul>
-      <li><a href="adminevents.php">Home</a></li>
+      <li><a href="admindashboard.php">Home</a></li>
       <li><a href="adminevents.php">Manage Events</a></li>
       <li><a href="#">Manage Accounts</a></li>
       <li><a href="adminpending.php">Users Request</a></li>
-      <li><a href="logout.php">Logout</a></li>
+      <li><a href="admin_event_reg.php">Manage event Registration</a></li>
+        <li><a href="logout.php">Logout</a></li>
     </ul>
   </nav>
   <main>

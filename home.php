@@ -292,13 +292,13 @@ https://templatemo.com/tm-568-digimedia
       <div class="row">
         <div class="col-lg-4 offset-lg-4">
           <div class="section-heading  wow fadeIn" data-wow-duration="1s" data-wow-delay="0.3s">
-            <h6 style="color: #181818;">Are you a Barangay Mapulang Lupa Resident?</h6>
-            <h4 style="color: #DF2935;">Get Verified Now!</h4>
+            <h6 style="color: #181818;">Logged in as a </h6>
+            <h4 style="color: #DF2935;">Resident</h4>
             <div class="line-dec"></div>
           </div>
         </div>
         <div class="col-lg-8 offset-lg-2  wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">     
-                  <h1 style="color: green">Already Verified</h1>
+                  <h1 style="color: green">Member</h1>
         </div>
       </div>
     </div>
