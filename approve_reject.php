@@ -1,7 +1,7 @@
 <?php
-require 'C:\xampp\htdocs\brgymapulanglupa\PHPmailer\src\Exception.php';
-require 'C:\xampp\htdocs\brgymapulanglupa\PHPmailer\src\PHPMailer.php';
-require 'C:\xampp\htdocs\brgymapulanglupa\PHPmailer\src\SMTP.php';
+require 'C:\Users\Patrick\Downloads\BARANGAY BAGBAG EVENT\Activities-and-Event-Registration\PHPmailer\src\Exception.php';
+require 'C:\Users\Patrick\Downloads\BARANGAY BAGBAG EVENT\Activities-and-Event-Registration\PHPmailer\src\PHPMailer.php';
+require 'C:\Users\Patrick\Downloads\BARANGAY BAGBAG EVENT\Activities-and-Event-Registration\PHPmailer\src\SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -68,13 +68,21 @@ if ($approval_status == 'approved') {
         $mail->Body = $message;
 
         $mail->send();
-        echo 'Message has been sent';
     } catch (Exception $e) {
-        echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
+        $mail->ErrorInfo;
+        
     }
 
 if ($approval_status == 'rejected') {
     // Get reject reason from form
+     // Retrieve email from tbl_small_occasion table
+     $query = "SELECT request_email FROM tbl_small_occasion WHERE request_id = ?";
+     $stmt = mysqli_prepare($conn, $query);
+     mysqli_stmt_bind_param($stmt, "i", $request_id);
+     mysqli_stmt_execute($stmt);
+     $result = mysqli_stmt_get_result($stmt);
+     $row = mysqli_fetch_assoc($result);
+     $to = $row['request_email']; 
     $reject_reason = $_POST['reject_reason'];
 
     // Send notification to user for rejection

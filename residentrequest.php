@@ -10,13 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $request_description = $_POST['request_description'];
   $first_name = $_POST['first_name'];
   $last_name = $_POST['last_name'];
-  $request_username = $_POST['request_username'];
   $request_email = $_POST['request_email'];
 
 // Insert the data into tbl_small_occasion table, without specifying approval_status
-$query = "INSERT INTO tbl_small_occasion (request_title, request_date, request_description, request_username, request_email, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$query = "INSERT INTO tbl_small_occasion (request_title, request_date, request_description, request_email, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "sssssss", $request_title, $request_date, $request_description, $request_username, $request_email, $first_name, $last_name);
+mysqli_stmt_bind_param($stmt, "ssssss", $request_title, $request_date, $request_description, $request_email, $first_name, $last_name);
 mysqli_stmt_execute($stmt);
 
 
