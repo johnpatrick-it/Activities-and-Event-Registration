@@ -125,7 +125,7 @@ mysqli_stmt_execute($stmt);
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 16px;
-    width: 80%;
+    width: 100%;
     height: 100px; 
   }
 
