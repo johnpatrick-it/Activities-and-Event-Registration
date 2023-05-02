@@ -41,9 +41,9 @@ if (isset($to) && filter_var($to, FILTER_VALIDATE_EMAIL)) {
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'baranggaymapulanglupa@gmail.com';
-    $mail->Password = 'likpo123456789';
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
+    $mail->Password = 'nvgeadocuwfaohao';
+    $mail->SMTPSecure = 'ssl';
+    $mail->Port = 465;
 
     // Recipients
     $mail->setFrom('baranggaymapulanglupa@gmail.com', 'Admin');
