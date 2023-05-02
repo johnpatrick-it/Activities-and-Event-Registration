@@ -140,9 +140,10 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
             justify-content: space-between;
             border: 10px solid black;
             border-radius: 5px;
-            margin-bottom: 20px;
-            
+            margin: 0 auto;   
+            margin-bottom: 20px;    
         }
+        
         .request-item {
             width: calc(33% - 20px);
             margin-bottom: 20px;
@@ -163,7 +164,7 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
               background-color: #f2f2f2;
           }
           td.request-description{
-            max-width: 300px;
+            max-width: 500px;
             word-wrap: break-word;
           }
           form {
@@ -247,13 +248,7 @@ mysqli_close($conn);
     function confirmReject() {
     var rejectRadio = document.querySelector('input[name="approval_status"][value="rejected"]');
     if (rejectRadio.checked) {
-        var rejectReason = prompt("Enter the reason for rejection:");
-        if (rejectReason === null || rejectReason === "") {
-            alert("Please enter a reason for rejection.");
-            return false;
-        } else {
-            return true;
-        }
+        return confirm("Are you sure you want to reject this request?");
     }
     return true;
 }

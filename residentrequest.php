@@ -27,14 +27,14 @@ mysqli_stmt_execute($stmt);
     ?>
      <script>
        window.alert('Request sent successfully!');
-       window.location.href='memberevent.php';
+       window.location.href='residentrequest.php';
      </script>
      <?php
   } else {
     ?>
      <script>
        window.alert('Request failed to send!');
-       window.location.href='memberevent.php';
+       window.location.href='residentrequest.php';
      </script>
      <?php
   }
@@ -53,54 +53,25 @@ mysqli_stmt_execute($stmt);
     body{
       width: 100%;
       height: calc(100%);
-      background: #007bff;
+      background: #A6E3E9;
     }
     main#main{
       width:100%;
       height: calc(100%);
       background:rgb(250, 0, 0);
     }
-    #login-right{
-      position: absolute;
-      right:0;
-      width:40%;
-      height: calc(100%);
-      background:rgb(47, 69, 234);
-      display: flex;
-      align-items: center
-    }
-    #login-left{
-      position: absolute;
-      left:0;
-      width:60%;
-      height: calc(100%);
-      background:rgb(235, 235, 239);
-      display: flex;
-      align-items: center;
-    }
-    #login-right .card{
-      margin: auto
-        
-    }
-    .logo {
-      margin: auto;
-      font-size: 8rem;
-      padding: .5em 0.8em;
-      color: #000000b3;
-    }
+
     .form-group {
       padding-bottom: 8px;
       font-family: sans-serif;
     }
-    /* Add some margin and padding to the form */
     form {
       margin: 20px;
       padding: 20px;
-      width: 80%; /* Adjusted form width */
-      max-width: 600px; /* Added maximum width for form */
-      margin: auto; /* Center the form horizontally */
+      width: 60%; /* Adjusted form width */
+      max-width: 600; /* Added maximum width for form */
+      margin: auto;
     }
-    /* Add some space between labels and input fields */
     label {
       display: block;
       margin-bottom: 5px;
@@ -126,7 +97,6 @@ mysqli_stmt_execute($stmt);
       border-radius: 5px;
       cursor: pointer;
     }
-    /* Hover state for the button */
     button[type="submit"]:hover {
       background-color: #1b22fa;
     }
@@ -135,13 +105,10 @@ mysqli_stmt_execute($stmt);
       font-size: 16px;
       font-weight: 300;
     }
-    .logo img {
-      width: 400px;
-      height: auto;
-    }
     .header {
-            background-color: #007bff;
+            background-color: #CBF1F5;
             padding: 30px;
+            margin: auto;
         }
 
         .home-btn {
@@ -151,6 +118,22 @@ mysqli_stmt_execute($stmt);
         .request-event-btn {
             margin-left: 900px;
         }
+
+        textarea {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 80%;
+    height: 100px; 
+  }
+
+
+  .submit-container {
+    text-align: center;
+    margin-top: 10px;
+  }
         
   </style>
 </head>
@@ -172,7 +155,10 @@ mysqli_stmt_execute($stmt);
     <input type="email" id="request_email" name="request_email" required><br>
     <label for="request_description">Request Description:</label><br>
     <textarea id="request_description" name="request_description" required></textarea><br><br>
-    <button type="submit">Submit</button>
+    <div class="submit-container">
+      <button type="submit">Submit</button>
+    </div>
+</form>
     </form>
 </body>
 </html>
