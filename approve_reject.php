@@ -62,7 +62,6 @@ if (isset($to) && filter_var($to, FILTER_VALIDATE_EMAIL)) {
 
     try {
         $mail->send();
-        echo 'Message has been sent';
     } catch (Exception $e) {
         
         
