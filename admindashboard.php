@@ -113,6 +113,12 @@ $sql_upcoming_events = "SELECT COUNT(*) as upcoming_events FROM tbl_event WHERE 
 $result_upcoming_events = mysqli_query($conn, $sql_upcoming_events);
 $row_upcoming_events = mysqli_fetch_assoc($result_upcoming_events);
 $upcoming_events = $row_upcoming_events['upcoming_events'];
+
+// Count the number of pending requests
+$sql_pending_requests = "SELECT COUNT(*) as pending_requests FROM tbl_small_occasion WHERE approval_status = 'pending'";
+$result_pending_requests = mysqli_query($conn, $sql_pending_requests);
+$row_pending_requests = mysqli_fetch_assoc($result_pending_requests);
+$pending_requests = $row_pending_requests['pending_requests'];
 ?>
 
 <body>
@@ -141,5 +147,10 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
       <p><?php echo $upcoming_events; ?></p>
       </a>
     </div>
+    <div class="card">
+      <a href="adminpending.php"><h2>Pending Requests</h2>
+      <p><?php echo $pending_requests; ?></p>
+    </a>
+  </div>
   </main>
 </body>
