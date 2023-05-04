@@ -30,6 +30,25 @@ $result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
 $to = $row['request_email'];
 
+// Retrieve request_title from tbl_small_occasion table
+$query = "SELECT request_title FROM tbl_small_occasion WHERE request_id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $request_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$row = mysqli_fetch_assoc($result);
+$request_title = $row['request_title'];
+
+$query = "SELECT last_name FROM tbl_small_occasion WHERE request_id = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $request_id);
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
+$row = mysqli_fetch_assoc($result);
+$last_name = $row['last_name'];
+
+
+
 // Check if email is valid
 if (isset($to) && filter_var($to, FILTER_VALIDATE_EMAIL)) {
     // Create a new PHPMailer instance
@@ -46,7 +65,7 @@ if (isset($to) && filter_var($to, FILTER_VALIDATE_EMAIL)) {
     $mail->Port = 465;
 
     // Recipients
-    $mail->setFrom('baranggaymapulanglupa@gmail.com', 'admin_barangay_mapulanglupa');
+    $mail->setFrom('baranggaymapulanglupa@gmail.com', 'Admin_Barangay_Mapulanglupa');
     $mail->addAddress($to);
 
     // Content
@@ -54,10 +73,35 @@ if (isset($to) && filter_var($to, FILTER_VALIDATE_EMAIL)) {
 
     if ($approval_status == 'approved') {
         $mail->Subject = "Request Approved";
-        $mail->Body = "Your request has been approved by the admin.";
+        $mail->Body = "
+Dear Mr/Ms $last_name,
+        
+We are glady to inform you that your recent request ($request_title) has been approved by our administration. After careful review of your request, we have determined that we can accommodate your request at this time.
+
+Please wait for one of our workers to contact you for further discussion of the matter or would you like visit us at the Barangay Hall. Our office hours are open 24/7. 
+        
+Alternatively, you may also contact us at 
+baranggaymapulanglupa@gmail.com or through our Facebook page at https://www.facebook.com/bagongmapulanglupa2018.
+Thank you for your understanding and cooperation.
+        
+Sincerely,
+Baranggay Mapulang Lupa Administration:\n\n" ;
+       
     } else if ($approval_status == 'rejected') {
         $mail->Subject = "Request Rejected";
-        $mail->Body = "Your request has been rejected by the admin for the following reason:\n\n" ;
+        $mail->Body = "
+Dear Mr/Ms $last_name,
+        
+We regret to inform you that your recent request ($request_title) has been rejected by our administration. After careful review of your request, we have determined that we are unable to accommodate it at this time.
+
+If you have any questions or would like to discuss the matter further, please feel free to visit us at the Barangay Hall. Our office hours are open 24/7. 
+
+Alternatively, you may also contact us at 
+baranggaymapulanglupa@gmail.com or through our Facebook page at https://www.facebook.com/bagongmapulanglupa2018.
+Thank you for your understanding and cooperation.
+
+Sincerely,
+Baranggay Mapulang Lupa Administration:\n\n" ;
     }
 
     try {
