@@ -46,7 +46,7 @@ if (isset($to) && filter_var($to, FILTER_VALIDATE_EMAIL)) {
     $mail->Port = 465;
 
     // Recipients
-    $mail->setFrom('baranggaymapulanglupa@gmail.com', 'Admin');
+    $mail->setFrom('baranggaymapulanglupa@gmail.com', 'admin_barangay_mapulanglupa');
     $mail->addAddress($to);
 
     // Content
