@@ -173,7 +173,7 @@ if (mysqli_num_rows($result) > 0) {
         if (strtotime($row['event_date']) > time()) {
             // Upcoming event
             echo '<div class="box upcoming-box">Upcoming</div>';
-            echo '<a href="register.php?event_id=' . $row['event_id'] . '" class="btn btn-primary">Register</a>';
+            echo '<a href="mem_register.php?event_id=' . $row['event_id'] . '" class="btn btn-primary">Register</a>';
         } else {
             // Done event
             echo '<div class="box done-box">Done</div>';

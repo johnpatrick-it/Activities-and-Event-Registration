@@ -61,49 +61,9 @@ main p {
       border-collapse: collapse;
       padding: 5px;
     }
-
-    #close-event-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#upload-event-btn {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 24px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-}
-
-#upload-event-btn:hover {
-  background-color: #45a049;
-}
-#event-form input[type=submit] {
-  background-color: #008CBA;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background-color 0.3s;
-}
-
-#event-form input[type=submit]:hover {
-  background-color: #0073a7;
-}
-
 </style>
 <body>
- <nav>
+  <nav>
     <ul>
       <li><a href="admindashboard.php">Home</a></li>
       <li><a href="adminevents.php">Manage Events</a></li>
@@ -161,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="css\event.css">
 </head>
 <body>
-    <button id="upload-event-btn" style="font-size: 24px; padding: 5px;">Upload an Event</button>
+    
 
     <div id="event-form-popup" class="form-popup">
         <form id="event-form" action="add_event.php" method="post" enctype="multipart/form-data">
@@ -190,8 +150,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <option value="open-for-all">Public</option>
             </select>
     <input type="submit" value="Add Event">
-    <button id="close-event-btn" type="button" onclick="closePopup()">Close</button>
-
     </form>
     </div>
     <script src="js\event.js"></script>
@@ -201,59 +159,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <table style="width:100%; border-collapse:collapse;">
     <thead>
       <tr style="background-color:grey; color:white; font-weight:bold;">
-        <th>ID</th>
-        <th>Title</th>
-        <th>Date</th>
-        <th>Poster</th>
-        <th>Limit</th>
-        <th>Type</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Registration ID</th>
+        <th>Event Joined</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Birthday</th>
+        <th>Age</th>
+        <th>Sex</th>
+        <th>Address</th>
       </tr>
     </thead>
     <tbody>
       <?php
-        // Include database connection file
-        include_once "db_conn.php";
-        
-        // Fetch data from table
-        $sql = "SELECT event_id, event_title, event_date, event_poster, event_limit, event_Type FROM tbl_event";
-        $result = mysqli_query($conn, $sql);
-        
-        // Display data in table
-        if (mysqli_num_rows($result) > 0) {
-          while($row = mysqli_fetch_assoc($result)) {
-            echo "<tr>";
-            echo "<td>".$row["event_id"]."</td>";
-            echo "<td>".$row["event_title"]."</td>";
-            echo "<td>".$row["event_date"]."</td>";
-            echo "<td>".$row["event_poster"]."</td>";
-            echo "<td>".$row["event_limit"]."</td>";
-            echo "<td>".$row["event_Type"]."</td>";
-            echo "<td><a href='edit_event.php?event_id=".$row["event_id"]."'>Edit</a></td>";
-            echo "<td><a href='delete_event.php?event_id=".$row["event_id"]."'>Delete</a></td>";
-            echo "</tr>";
-          }
-        } else {
-          echo "<tr><td colspan='7'>No events found</td></tr>";
-        }
-        
-        // Close database connection
-        mysqli_close($conn);
-      ?>
+include 'db_conn.php';
+
+$sql = "SELECT tbl_eventreg.*, tbl_event.event_title 
+        FROM tbl_eventreg
+        INNER JOIN tbl_event ON tbl_eventreg.event_joined = tbl_event.event_id";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+  while($row = mysqli_fetch_assoc($result)) {
+    echo "<tr>";
+    echo "<td>".$row["reg_id"]. "</td>";
+    echo "<td>". $row["event_title"]. "</td>";
+    echo "<td>".$row["first_name"]. "</td>";
+    echo "<td>". $row["last_name"]. "</td>";
+    echo "<td>".$row["birthday"]. "</td>";
+    echo "<td>".$row["age"]. "</td>";
+    echo  "<td>".$row["sex"]. "</td>";
+    echo "<td>". $row["address"]. "</td>";
+    echo "</tr>";
+  }
+} else {
+  echo "No results found";
+}
+
+mysqli_close($conn);
+
+?>
+
     </tbody>
   </table>
 </main>
-<script>
-function disablePastDates() {
-  const eventDateInput = document.getElementById("event-date");
-  const today = new Date();
-  const formattedToday = today.toISOString().split("T")[0];
-  eventDateInput.setAttribute("min", formattedToday);
-}
 
-document.addEventListener("DOMContentLoaded", disablePastDates);
-
-</script>
 </body>
 </html>

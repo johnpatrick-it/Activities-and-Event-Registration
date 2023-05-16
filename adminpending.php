@@ -118,11 +118,12 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
 <body>
   <nav>
     <ul>
-      <li><a href="adminevents.php">Home</a></li>
+      <li><a href="admindashboard.php">Home</a></li>
       <li><a href="adminevents.php">Manage Events</a></li>
       <li><a href="#">Manage Accounts</a></li>
       <li><a href="adminpending.php">Users Request</a></li>
-      <li><a href="logout.php">Logout</a></li>
+      <li><a href="admin_event_reg.php">Manage event Registration</a></li>
+        <li><a href="logout.php">Logout</a></li>
     </ul>
   </nav>
   <main>
@@ -131,52 +132,71 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
 <head>
     <title>Pending Requests</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+         body {
+              font-family: Arial, sans-serif;
+          }
+          .requests-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            border: 10px solid black;
+            border-radius: 5px;
+            margin: 0 auto;   
+            margin-bottom: 20px;    
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        
+        .request-item {
+            width: calc(33% - 20px);
             margin-bottom: 20px;
         }
-        th, td {
-            padding: 7px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        form {
-            margin-top: 10px;
-        }
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-        input[type="submit"] {
-            padding: 15px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            cursor: pointer;
+          table {
+              width: 100%;
+              border-collapse: separate;
+              margin-bottom: 20px;
+              border-spacing: 0 20px;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 10);
+          }
+          th, td {
+              padding: 7px;
+              text-align: left;
+              border-bottom: 1px solid #ddd;
+          }
+          th {
+              background-color: #f2f2f2;
+          }
+          td.request-description{
+            max-width: 500px;
+            word-wrap: break-word;
+          }
+          form {
+              margin-top: 10px;
+              text-align: center;
+          }
+          input[type="radio"] {
+              margin-right: 5px;
+          }
+          input[type="submit"] {
+              padding: 15px;
+              background-color: #4CAF50;
+              color: #fff;
+              border: none;
+              cursor: pointer;
 
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        hr {
-            border: none;
-            border-top: 1px solid #ddd;
-            margin: 20px 0;
-        }
+          }
+          input[type="submit"]:hover {
+              background-color: #45a049;
+          }
+          hr {
+              border: none;
+              border-top: 1px solid #ddd;
+              margin: 20px 0;
+          }
     </style>
 </head>
 <body>
-<header style="text-align: center; font-size: 24px;">
-    <a href="admindashboard.php" style="text-decoration: none;">Back</a>
+<header>
 </header>
-
-    <h1>Pending Requests</h1>
+<div class="requests-container">
     <?php
     // Include database connection file
     include('db_conn.php');
@@ -194,7 +214,6 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
             $request_description = $row['request_description'];
             $first_name = $row['first_name'];
             $last_name = $row['last_name'];
-            $request_username = $row['request_username'];
             $request_email = $row['request_email'];
 
             // Display request details in HTML table
@@ -205,7 +224,6 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
             echo "<tr><th>Request Description:</th><td>" . $request_description . "</td></tr>";
             echo "<tr><th>First Name:</th><td>" . $first_name . "</td></tr>";
             echo "<tr><th>Last Name:</th><td>" . $last_name . "</td></tr>";
-            echo "<tr><th>Username:</th><td>" . $request_username . "</td></tr>";
             echo "<tr><th>Email:</th><td>" . $request_email . "</td></tr>";
             echo "<tr><td colspan='2'>";
             echo "<form action='approve_reject.php' method='post' onsubmit='return confirmReject()'>";
@@ -226,17 +244,12 @@ $upcoming_events = $row_upcoming_events['upcoming_events'];
             // Close database connection
 mysqli_close($conn);
 ?>
+</div>
 <script>
     function confirmReject() {
     var rejectRadio = document.querySelector('input[name="approval_status"][value="rejected"]');
     if (rejectRadio.checked) {
-        var rejectReason = prompt("Enter the reason for rejection:");
-        if (rejectReason === null || rejectReason === "") {
-            alert("Please enter a reason for rejection.");
-            return false;
-        } else {
-            return true;
-        }
+        return confirm("Are you sure you want to reject this request?");
     }
     return true;
 }
@@ -244,5 +257,4 @@ mysqli_close($conn);
 </main>
 </body>
 </html>
-
 

@@ -10,13 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $request_description = $_POST['request_description'];
   $first_name = $_POST['first_name'];
   $last_name = $_POST['last_name'];
-  $request_username = $_POST['request_username'];
   $request_email = $_POST['request_email'];
 
 // Insert the data into tbl_small_occasion table, without specifying approval_status
-$query = "INSERT INTO tbl_small_occasion (request_title, request_date, request_description, request_username, request_email, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$query = "INSERT INTO tbl_small_occasion (request_title, request_date, request_description, request_email, first_name, last_name) VALUES (?, ?, ?, ?, ?, ?)";
 $stmt = mysqli_prepare($conn, $query);
-mysqli_stmt_bind_param($stmt, "sssssss", $request_title, $request_date, $request_description, $request_username, $request_email, $first_name, $last_name);
+mysqli_stmt_bind_param($stmt, "ssssss", $request_title, $request_date, $request_description, $request_email, $first_name, $last_name);
 mysqli_stmt_execute($stmt);
 
 
@@ -28,14 +27,14 @@ mysqli_stmt_execute($stmt);
     ?>
      <script>
        window.alert('Request sent successfully!');
-       window.location.href='memberevent.php';
+       window.location.href='residentrequest.php';
      </script>
      <?php
   } else {
     ?>
      <script>
        window.alert('Request failed to send!');
-       window.location.href='memberevent.php';
+       window.location.href='residentrequest.php';
      </script>
      <?php
   }
@@ -50,58 +49,36 @@ mysqli_stmt_execute($stmt);
 <html>
 <head>
   <title>Resident Request Form</title>
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-digimedia-v1.css">
+    <link rel="stylesheet" href="assets/css/animated.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
   <style>
     body{
       width: 100%;
       height: calc(100%);
-      background: #007bff;
+      background: #A6E3E9;
     }
     main#main{
       width:100%;
       height: calc(100%);
       background:rgb(250, 0, 0);
     }
-    #login-right{
-      position: absolute;
-      right:0;
-      width:40%;
-      height: calc(100%);
-      background:rgb(47, 69, 234);
-      display: flex;
-      align-items: center
-    }
-    #login-left{
-      position: absolute;
-      left:0;
-      width:60%;
-      height: calc(100%);
-      background:rgb(235, 235, 239);
-      display: flex;
-      align-items: center;
-    }
-    #login-right .card{
-      margin: auto
-        
-    }
-    .logo {
-      margin: auto;
-      font-size: 8rem;
-      padding: .5em 0.8em;
-      color: #000000b3;
-    }
+
     .form-group {
       padding-bottom: 8px;
       font-family: sans-serif;
     }
-    /* Add some margin and padding to the form */
     form {
       margin: 20px;
       padding: 20px;
-      width: 80%; /* Adjusted form width */
-      max-width: 600px; /* Added maximum width for form */
-      margin: auto; /* Center the form horizontally */
+      width: 60%; /* Adjusted form width */
+      max-width: 600; /* Added maximum width for form */
+      margin: auto;
     }
-    /* Add some space between labels and input fields */
     label {
       display: block;
       margin-bottom: 5px;
@@ -127,7 +104,6 @@ mysqli_stmt_execute($stmt);
       border-radius: 5px;
       cursor: pointer;
     }
-    /* Hover state for the button */
     button[type="submit"]:hover {
       background-color: #1b22fa;
     }
@@ -136,13 +112,10 @@ mysqli_stmt_execute($stmt);
       font-size: 16px;
       font-weight: 300;
     }
-    .logo img {
-      width: 400px;
-      height: auto;
-    }
     .header {
-            background-color: #007bff;
+            background-color: #CBF1F5;
             padding: 30px;
+            margin: auto;
         }
 
         .home-btn {
@@ -152,30 +125,87 @@ mysqli_stmt_execute($stmt);
         .request-event-btn {
             margin-left: 900px;
         }
-        
+
+        textarea {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    width: 100%;
+    height: 100px; 
+  }
+  .submit-container {
+    text-align: center;
+    margin-top: 10px;
+  }
+      
+  
   </style>
 </head>
 <body>
+
+<div class="pre-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-sm-8 col-7">
+          <ul class="info">
+            <li><a href="#"><i class="fa fa-envelope"></i>brgy.mapulanglupa2018@gmail.com</a></li>
+            <li><a href="#"><i class="fa fa-phone"></i>0923-088-8995</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-4 col-sm-4 col-5">
+          <ul class="social-media">
+            <li><a href="https://www.facebook.com/bagongmapulanglupa2018"><i class="fa fa-facebook"></i></a></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
 <div class="header">
-<a href="home.php" class="home-btn">HOME</a>
-<a href="memberevent.php" class="request-event-btn">BACK</a>
+<div class="border-first-button"><a href="memberevent.php">Back To Events</a></div>
 </div>
-  <form action="residentrequest.php" method="post">
-    <label for="request_title">Request Title:</label><br>
-    <input type="text" id="request_title" name="request_title" required><br>
-    <label for="request_date">Request Date:</label><br>
-    <input type="date" id="request_date" name="request_date" required><br>
-    <label for="first_name">First Name:</label><br>
-    <input type="text" id="first_name" name="first_name" required>
-    <label for="last_name">Last Name:</label><br>
-    <input type="text" id="last_name" name="last_name" required><br>
-    <label for="email">Email:</label><br>
-    <input type="email" id="request_email" name="request_email" required><br>
-    <label for="request_description">Request Description:</label><br>
-    <textarea id="request_description" name="request_description" required></textarea><br><br>
-    <button type="submit">Submit</button>
-    </form>
+  <form action="residentrequest.php" method="post" onsubmit="return validateForm()">
+    <label for="request_title">Request Title:</label>
+    <input type="text" id="request_title" name="request_title" required autocomplete="off"><br>
+    <label for="request_date">Request Date:</label>
+    <input type="date" id="request_date" name="request_date" required autocomplete="off" onkeydown="return false"><br>
+    <label for="first_name">First Name:</label>
+    <input type="text" id="first_name" name="first_name" required autocomplete="off">
+    <label for="last_name">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" required autocomplete="off"><br>
+    <label for="email">Email:</label>
+    <input type="email" id="request_email" name="request_email" required autocomplete="off"><br>
+    <label for="request_description">Request Description:</label>
+    <textarea id="request_description" name="request_description" required autocomplete="off"></textarea><br><br>
+    <div class="submit-container">
+      <button type="submit">Submit</button>
+    </div>
+</form>
+    <script type="text/javascript">
+    window.onload = function () {
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("request_date").setAttribute('min', today);
+    }
+    function validateForm() {
+    var request_title = document.getElementById("request_title").value;
+    var request_date = document.getElementById("request_date").value;
+    var first_name = document.getElementById("first_name").value;
+    var last_name = document.getElementById("last_name").value;
+    var request_email = document.getElementById("request_email").value;
+    var request_description = document.getElementById("request_description").value;
+
+    if (/\s/g.test(request_title) || /\s/g.test(request_date) || /\s/g.test(first_name) || /\s/g.test(last_name) || /\s/g.test(request_email) || /\s/g.test(request_description)) {
+      alert("Please enter only valid inputs.");
+      return false;
+    }
+}
+
+</script>
 </body>
 </html>
-
 

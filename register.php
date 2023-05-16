@@ -152,47 +152,62 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
   			<div class="card col-md-8">
   				<div class="card-body">
-  					<form id="login-form" method="POST" action="register.php">
+  					<form id="login-form" method="POST" action="register.php" onsubmit="return validateForm()">
                         <div>
                             <label for="first_name" style="font-size: large; font-family: sans-serif;">First Name:</label>
-                            <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
+                            <input type="text" id="first_name" name="first_name" placeholder="First Name" required autocomplete="off">
                           </div>
                           <div>
                             <label for="last_name" style="font-size: large; font-family: sans-serif;">Last Name:</label>
-                            <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
+                            <input type="text" id="last_name" name="last_name" placeholder="Last Name" required autocomplete="off">
                           </div>
                           <div>
                             <label for="username" style="font-size: large; font-family: sans-serif;">Username:</label>
-                            <input type="text" id="username" name="username" placeholder="Username" required>
+                            <input type="text" id="username" name="username" placeholder="Username" required autocomplete="off">
                           </div>
                           <div>
                             <label for="email" style="font-size: large; font-family: sans-serif;">Email:</label>
-                            <input type="email" id="email" name="email" placeholder="Email" required>
+                            <input type="email" id="email" name="email" placeholder="Email" required autocomplete="off">
                           </div>
                           <div>
                             <label for="password" style="font-size: large; font-family: sans-serif;">Password:</label>
-                            <input type="password" id="password" name="password" placeholder="Password" required>
+                            <input type="password" id="password" name="password" placeholder="Password" required autocomplete="off">
                           </div>
                           <div>
-                            <label style="font-size: large; font-family: sans-serif;">Resident:</label>
+                            <label style="font-size: large; font-family: sans-serif;">Are you a Barangay Resident ?</label>
                             <select name="user_resident" style="border: blue;" required>
                                 <option value="">--Select--</option>
-                                <option value="non-resident">Non-Resident</option>
-                                <option value="resident">Resident</option>
+                                <option value="resident">Yes</option>
+                                <option value="non-resident">No</option>
                             </select>
                           </div>
                           <br>
                           <button type="submit">Register</button>
-                          <a href="login.php" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Login</a>
                         </form>
+                        <div style="display: flex; justify-content: center; position: absolute; top: 0; right: 3;">
+                          <form>
+                            <label style="font-size: large; font-family: sans-serif;">Already Registered ?</label>
+                            <a href="login.php" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Login</a>
+                          </form>
+                        <div>
   				    </div>
   			    </div>
   		    </div>
    		</div>
-
   </main>
-
   <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
-
-
 </body>
+<script>
+function validateForm() {
+    var first_name = document.getElementById("first_name").value;
+    var last_name = document.getElementById("last_name").value;
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+
+    if (/\s/g.test(first_name) || /\s/g.test(last_name) || /\s/g.test(username) || /\s/g.test(password)) {
+      alert("Please enter only valid inputs.");
+      return false;
+    }
+}
+</script>
+</html>
