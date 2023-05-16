@@ -11,22 +11,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $user_resident = $_POST['user_resident'];
 
-    $sql = "INSERT INTO `users` (`first_name`, `last_name`, `name`, `username`, `email`, `password`, `user_resident`, `user_type`)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 'member')";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('sssssss', $first_name, $last_name, $name, $username, $email, $password, $user_resident);
-    $stmt->execute();
+    // Check if the user with the same email or username exists
+    $check_query = "SELECT * FROM `users` WHERE `email` = ? OR `username` = ?";
+    $check_stmt = $conn->prepare($check_query);
+    $check_stmt->bind_param('ss', $email, $username);
+    $check_stmt->execute();
+    $check_result = $check_stmt->get_result();
 
-    if ($stmt->affected_rows === 1) {
-        echo "User registered successfully!";
+    if ($check_result->num_rows > 0) {
+        // User with the same email or username already exists
+        echo "Error: A user with the same email or username already exists.";
     } else {
-        echo "Error: " . $stmt->error;
+        // Insert the new user into the database
+        $sql = "INSERT INTO `users` (`first_name`, `last_name`, `name`, `username`, `email`, `password`, `user_resident`, `user_type`)
+                VALUES (?, ?, ?, ?, ?, ?, ?, 'member')";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('sssssss', $first_name, $last_name, $name, $username, $email, $password, $user_resident);
+        $stmt->execute();
+
+        if ($stmt->affected_rows === 1) {
+            echo "User registered successfully!";
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
 
-    $stmt->close();
+    $check_stmt->close();
     $conn->close();
 }
 ?>
+
 
 
 <!DOCTYPE html>
@@ -36,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>REGISTER</title>
+  <title>Register Account</title>
  	
 
 </head>
