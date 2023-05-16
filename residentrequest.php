@@ -199,11 +199,12 @@ mysqli_stmt_execute($stmt);
     var request_email = document.getElementById("request_email").value;
     var request_description = document.getElementById("request_description").value;
 
-    if (/\s/g.test(request_title) || /\s/g.test(request_date) || /\s/g.test(first_name) || /\s/g.test(last_name) || /\s/g.test(request_email) || /\s/g.test(request_description)) {
-      alert("Please enter only valid inputs.");
-      return false;
+    if (/^\s/.test(request_title) || /^\s/.test(request_date) || /^\s/.test(first_name) || /^\s/.test(last_name) || /^\s/.test(request_email) || /^\s/.test(request_description)) {
+        alert("Please enter only valid inputs.");
+        return false;
     }
 }
+
 
 </script>
 </body>

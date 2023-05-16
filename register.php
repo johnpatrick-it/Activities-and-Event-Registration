@@ -220,7 +220,7 @@ function validateForm() {
     var username = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
-    if (/\s/g.test(first_name) || /\s/g.test(last_name) || /\s/g.test(username) || /\s/g.test(password)) {
+    if (/^\s/g.test(first_name) || /^\s/g.test(last_name) || /^\s/g.test(username) || /^\s/g.test(password)) {
       alert("Please enter only valid inputs.");
       return false;
     }
