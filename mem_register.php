@@ -140,7 +140,7 @@ body {
 <body>
 <div class="wrapper">
   <div class="form-center">
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
       <div>
         <label for="event_joined">Event ID:</label>
         <input type="text" name="event_joined" value="<?php echo htmlspecialchars($event_title); ?>" readonly>
@@ -237,3 +237,29 @@ if (isset($_POST['submit'])) {
   mysqli_stmt_close($stmt);
 }
 ?>
+<script>
+function validateForm() {
+  var event_joined = document.getElementsByName("event_joined")[0].value;
+  var first_name = document.getElementsByName("first_name")[0].value;
+  var last_name = document.getElementsByName("last_name")[0].value;
+  var birthday = document.getElementsByName("birthday")[0].value;
+  var sex = document.getElementsByName("sex")[0].value;
+  var address = document.getElementsByName("address")[0].value;
+  var residency = document.getElementsByName("residency")[0].value;
+  var residency_image = document.getElementsByName("residency_image")[0].value;
+
+  if (
+    /^\s/.test(event_joined) ||
+    /^\s/.test(first_name) ||
+    /^\s/.test(last_name) ||
+    /^\s/.test(birthday) ||
+    /^\s/.test(sex) ||
+    /^\s/.test(address) ||
+    /^\s/.test(residency) ||
+    (residency === "resident" && /^\s/.test(residency_image))
+  ) {
+    alert("Please enter only valid inputs.");
+    return false;
+  }
+}
+</script>
