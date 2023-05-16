@@ -39,13 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $event_id = $_GET['event_id'];
-$query = "SELECT event_limit FROM tbl_event WHERE event_id = ?";
+$query = "SELECT event_limit, event_title FROM tbl_event WHERE event_id = ?";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, 's', $event_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 $row = mysqli_fetch_assoc($result);
 $event_limit = $row['event_limit'];
+$event_title = $row['event_title'];
 
 $query = "SELECT COUNT(*) as reg_id FROM tbl_eventreg WHERE event_joined = ?";
 $stmt = mysqli_prepare($conn, $query);
@@ -142,7 +143,7 @@ body {
     <form method="POST" enctype="multipart/form-data">
       <div>
         <label for="event_joined">Event ID:</label>
-        <input type="text" name="event_joined" value="<?php echo $_GET['event_id']; ?>" readonly>
+        <input type="text" name="event_joined" value="<?php echo htmlspecialchars($event_title); ?>" readonly>
       </div>
       <div>
         <label for="first_name">First Name:</label>
