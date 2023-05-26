@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($check_result->num_rows > 0) {
         // User with the same email or username already exists
-        echo "Error: A user with the same email or username already exists.";
+        $message = "Error: A user with the same email or username already exists.";
     } else {
         // Insert the new user into the database
         $sql = "INSERT INTO `users` (`first_name`, `last_name`, `name`, `username`, `email`, `password`, `user_resident`, `user_type`)
@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         if ($stmt->affected_rows === 1) {
-            echo "User registered successfully!";
+            $message = "User registered successfully!";
         } else {
             echo "Error: " . $stmt->error;
         }
@@ -100,15 +100,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   font-family: sans-serif;
 }
 
-/**/
-  /* Add some margin and padding to the form */
-  /* Add some margin and padding to the form */
+
   form {
     margin: 20px;
     padding: 20px;
   }
 
-  /* Add some space between labels and input fields */
   label {
     display: block;
     margin-bottom: 5px;
@@ -225,5 +222,11 @@ function validateForm() {
       return false;
     }
 }
+<?php if (isset($message)): ?>
+    alert("<?php echo $message; ?>");
+    <?php if ($message === "User registered successfully!"): ?>
+        window.location.href = "login.php";
+    <?php endif; ?>
+<?php endif; ?>
 </script>
 </html>

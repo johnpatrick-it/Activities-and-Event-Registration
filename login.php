@@ -141,7 +141,7 @@ mysqli_close($conn);
     <input type="password" name="password" required autocomplete="off"><br><br>
 
     <button type="submit" value="Login">Login</button>
-    <p>No account? <a href="register.php">Register here </a></p>
+    <p>No account yet? <a href="register.php">Register here </a></p>
   </form>
 </body>
 </html>

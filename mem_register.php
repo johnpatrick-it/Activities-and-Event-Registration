@@ -20,17 +20,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   
   $sex = $_POST['sex'];
   $address = $_POST['address'];
+  $residency = $_POST['residency'];
   
   // Check if the residency_image has been uploaded
-  if ($_FILES['residency_image']['size'] > 0) {
+  $residency_image = null;
+  if ($residency === 'resident' && $_FILES['residency_image']['size'] > 0) {
     $residency_image = file_get_contents($_FILES['residency_image']['tmp_name']);
-  } else {
-    $residency_image = null;
   }
   
   // Prepare a SQL statement to insert the data into the tbl_eventreg table
-  $stmt = mysqli_prepare($conn, 'INSERT INTO tbl_eventreg (event_joined, first_name, last_name, birthday, age, sex, address, residency_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-  mysqli_stmt_bind_param($stmt, 'ssssisss', $event_joined, $first_name, $last_name, $birthday, $age, $sex, $address, $residency_image);
+  $stmt = mysqli_prepare($conn, 'INSERT INTO tbl_eventreg (event_joined, first_name, last_name, birthday, age, sex, address, residency, residency_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+  mysqli_stmt_bind_param($stmt, 'ssssisssb', $event_joined, $first_name, $last_name, $birthday, $age, $sex, $address, $residency, $residency_image);
   mysqli_stmt_execute($stmt);
   
   // Redirect to the success page
@@ -185,12 +185,14 @@ body {
 </div>
 </div>
 </body>
-<script>
-  <?php if ($event_limit_reached): ?>
+
+<?php if ($event_limit_reached): ?>
+    <script>
     alert("The event limit has been reached. You cannot register for this event.");
     window.location.href = "memberevent.php";
-  <?php endif; ?>
-</script>
+    </script>
+<?php endif; ?>
+
 </html>
 <?php
 // Check if the form has been submitted
